@@ -1,0 +1,77 @@
+#! /bin/bash
+
+# create-vagrant-multi-project
+# By Matthew Fritz
+#
+# Creates a set of directories and files for my multi-machine Vagrant projects as a starting point.
+# This allows me to generate my general project structure and management scripts from a single
+# command and in a consistent way.
+#
+# Ensure you add the directory within which this script resides to your PATH in order to use it
+# throughout your system.
+#
+# Usage:
+#
+#    create-multi-vagrant-project [project name] [space-separated names of machines]
+#
+# Usage example (project name is "myproject" and the two machines are "web" and "db"):
+#
+#    create-multi-vagrant-project myproject web db
+#
+# This will create the following directory structure (and bare Git repository) based
+# on the arguments:
+#
+# myproject-vagrant/
+#    .git/
+#    images/
+#       .gitkeep
+#    machines/
+#       common/
+#          provision/
+#             provision-common.sh
+#       myproject-db/
+#          files/
+#             .gitkeep
+#          provision/
+#             provision-db.sh
+#          Vagrantfile
+#       myproject-web/
+#          files/
+#             .gitkeep
+#          provision/
+#             provision-web.sh
+#          Vagrantfile
+#    .gitignore
+#    LICENSE
+#    README.md
+#    add-vbox-guest-additions.bat
+#    add-vbox-guest-additions.sh
+#    start-vms.bat
+#    start-vms.sh
+#    stop-vms.bat
+#    stop-vms.sh
+#
+# The script will also perform a "chmod +x *.sh" on all the scripts in the root of
+# the new project directory to allow for immediate execution. Vagrant does not need
+# execute permissions on its provisioning scripts, however.
+#
+# The output of the script also ends with the following for easy addition to .bashrc
+# based upon the usage example (the path variable will be auto-populated based on
+# script location):
+#
+#    MYPROJECT_VAGRANT="/path/to/myproject-vagrant"
+#    alias myproject-vagrant="cd ${MYPROJECT_VAGRANT}"
+#    alias myproject-init="pushd ${MYPROJECT_VAGRANT} && ./add-vbox-guest-additions.sh && ./start-vms.sh && popd"
+#    alias myproject-start="pushd ${MYPROJECT_VAGRANT} && ./start-vms.sh && popd"
+#    alias myproject-stop="pushd ${MYPROJECT_VAGRANT} && ./stop-vms.sh && popd"
+#    alias myproject-restart="myproject-stop && myproject-start"
+#
+# Current script version (GitHub gist):
+# https://gist.github.com/matthewfritz/501c4e3b4b248b789cb77299d844e2a2
+
+# Resolve where this script lives on the filesystem
+SCRIPT_DIR=$(dirname $0)
+
+# Figure out the execution directory
+EXEC_DIR=$(pwd)
+
