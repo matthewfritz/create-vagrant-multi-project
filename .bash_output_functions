@@ -1,0 +1,66 @@
+#! /bin/bash
+
+# .bash_output_functions
+# By Matthew Fritz
+#
+# A collection of output functions for Bash
+# This file should be sourced in any script that wishes to use it
+#
+# ANSI colors and formatting in Bash:
+# https://misc.flogisoft.com/bash/tip_colors_and_formatting
+
+# Writes a red [ERROR] line to STDOUT followed by a newline character
+# Usage: write_color_error_line "Error message"
+write_color_error_line()
+{
+   # Light red is code 91 and the 0 means to clear formatting at the end of the line
+   echo -e $'\e[91m'"[ERROR] $1"$'\e[0m'
+}
+
+# Writes a red [ERROR] line to STDOUT and then exits with a numeric exit code
+# Usage: write_color_error_exit_line $E_ERROR_CODE "Error message"
+write_color_error_exit_line()
+{
+   # Light red is code 91 and the 0 means to clear formatting at the end of the line
+   echo -e $'\e[91m'"[ERROR] $2"$'\e[0m'
+   echo -e $'\e[91m'"Exiting."$'\e[0m'
+   exit $1
+}
+
+# Writes a cyan [INFO] line to STDOUT followed by a newline character
+# Usage: write_color_info_line "Info message"
+write_color_info_line()
+{
+   # Light cyan is code 96 and the 0 means to clear formatting at the end of the line
+   echo -e $'\e[96m'"[INFO] $1"$'\e[0m'
+}
+
+# Writes an [ERROR] line to STDOUT followed by a newline character
+# Usage: write_error_line "Error message"
+write_error_line()
+{
+   echo "[ERROR] $1"
+}
+
+# Writes an [ERROR] line to STDOUT and then exits with a numeric exit code
+# Usage: write_error_exit_line $E_ERROR_CODE "Error message"
+write_error_exit_line()
+{
+   echo "[ERROR] $2"
+   echo "Exiting."
+   exit $1
+}
+
+# Writes an [INFO] line to STDOUT followed by a newline character
+# Usage: write_info_line "Info message"
+write_info_line()
+{
+   echo "[INFO] $1"
+}
+
+# Writes a regular newline character to STDOUT
+# Usage: write_newline
+write_newline()
+{
+   echo ""
+}

@@ -75,3 +75,5 @@ SCRIPT_DIR=$(dirname $0)
 # Figure out the script execution directory
 EXEC_DIR=$(pwd)
 
+# Source the Bash output function library
+. ${SCRIPT_DIR}/.bash_output_functions
