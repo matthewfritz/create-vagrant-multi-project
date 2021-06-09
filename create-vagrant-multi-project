@@ -66,12 +66,12 @@
 #    alias myproject-stop="pushd ${MYPROJECT_VAGRANT} && ./stop-vms.sh && popd"
 #    alias myproject-restart="myproject-stop && myproject-start"
 #
-# Current script version (GitHub gist):
-# https://gist.github.com/matthewfritz/501c4e3b4b248b789cb77299d844e2a2
+# Current script version:
+# https://github.com/matthewfritz/create-vagrant-multi-project/blob/master/create-vagrant-multi-project
 
 # Resolve where this script lives on the filesystem
 SCRIPT_DIR=$(dirname $0)
 
-# Figure out the execution directory
+# Figure out the script execution directory
 EXEC_DIR=$(pwd)
 
