@@ -78,6 +78,9 @@ EXEC_DIR=$(pwd)
 # Resolve the script name
 SCRIPT_NAME=$(basename $0)
 
+# Project name (will be overridden)
+PROJECT_NAME="myproject"
+
 # Define our exit error codes
 E_PROJECT_DIR_EXISTS=81
 E_NO_MACHINES=82
@@ -117,14 +120,18 @@ display_usage()
    echo "\"web\" and \"db\"."
 }
 
-# Performs the scaffolding operations for the machine given in the argument.
+# Performs the scaffolding operations for the machine given in the argument based
+# upon the project name.
 #
-# Usage: scaffold_machine web
-# Generates the scaffolding for the machine called "web"
+# Usage: scaffold_machine myproject web
+# Generates the scaffolding for the machine called "web" in the project called
+# "myproject"
 scaffold_machine()
 {
-   local _machine_name="$1"
-   echo "Scaffolding $_machine_name"
+   local _project_name="$1"
+   local _machine_name="$2"
+   
+
 }
 
 # Execute the script based on the number of arguments passed
@@ -145,9 +152,21 @@ case "$#" in
       check_project_dir "$1"
       
       # Create the project directory and display a message
-      write_color_info_line "Creating project directory \"$1\"..."
-      mkdir ${EXEC_DIR}/${1}
-      write_color_info_line "Created project directory \"$1\""
+      _project_name="$1"
+      write_color_info_line "Creating project directory \"${_project_name}\"..."
+      mkdir ${EXEC_DIR}/${_project_name}
+      write_color_info_line "Created project directory \"${_project_name}\""
+
+      # Create the images directory and the .gitkeep file
+      write_color_info_line "Creating images directory..."
+      mkdir ${EXEC_DIR}/${_project_name}
+      touch ${EXEC_DIR}/${_project_name}/.gitkeep
+      write_color_info_line "Created images directory"
+
+      # Create the machines directory for machine operations
+      write_color_info_line "Creating machines directory..."
+      mkdir ${EXEC_DIR}/${_project_name}
+      write_color_info_line "Created machines directory"
 
       # The machines begin right after the index of the project
       _machine_index=1
@@ -157,8 +176,9 @@ case "$#" in
       write_color_info_line "Creating machine scaffolding..."
 
       for (( i = _machine_index; i < "$#"; i++ )); do
-         scaffold_machine "${_machines_arr[$i]}"
+         scaffold_machine "${_project_name}" "${_machines_arr[$i]}"
       done
+
       write_color_info_line "Finished"
       ;;
 esac
