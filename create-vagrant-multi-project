@@ -157,7 +157,13 @@ case "$#" in
       mkdir -p ${EXEC_DIR}/${_project_name}
       write_color_info_line "Created project directory \"${_project_name}\""
 
-      # Create the images directory and the .gitkeep file
+      # Create the bare Git repository in the project
+      pushd ${EXEC_DIR}/${_project_name}
+      git init
+      popd
+
+      # Create the images directory and the .gitkeep file and create a bare
+      # Git repository
       write_color_info_line "Creating images directory..."
       mkdir -p ${EXEC_DIR}/${_project_name}/images
       touch ${EXEC_DIR}/${_project_name}/images/.gitkeep
