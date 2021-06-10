@@ -116,6 +116,15 @@ display_usage()
    echo "\"web\" and \"db\"."
 }
 
+# Performs the scaffolding operations for the machine given in the argument.
+#
+# Usage: scaffold_machine web
+# Generates the scaffolding for the machine called "web"
+scaffold_machine()
+{
+   echo $_arr
+}
+
 # Execute the script based on the number of arguments passed
 case "$#" in
    0 )
@@ -133,7 +142,20 @@ case "$#" in
       # Check to see if the project directory already exists
       check_project_dir "$1"
       
+      # Create the project directory and display a message
+      write_color_info_line "Creating project directory \"$1\"..."
+      #mkdir ${EXEC_DIR}/${1}
+      write_color_info_line "Created project directory \"$1\""
+
       # Scaffold the machines for the project
-      echo "Project name and machines"
+      write_color_info_line "Creating machine scaffolding..."
+
+      # The machines begin right after the index of the project
+      _machine_index=1
+      _machines_arr=($@)
+      for (( i = _machine_index; i < "$#"; i++ )); do
+         echo "${_machines_arr[$i]}"
+      done
+      write_color_info_line "Finished"
       ;;
 esac
