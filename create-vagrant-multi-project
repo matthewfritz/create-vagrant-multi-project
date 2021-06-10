@@ -154,18 +154,18 @@ case "$#" in
       # Create the project directory and display a message
       _project_name="$1"
       write_color_info_line "Creating project directory \"${_project_name}\"..."
-      mkdir ${EXEC_DIR}/${_project_name}
+      mkdir -p ${EXEC_DIR}/${_project_name}
       write_color_info_line "Created project directory \"${_project_name}\""
 
       # Create the images directory and the .gitkeep file
       write_color_info_line "Creating images directory..."
-      mkdir ${EXEC_DIR}/${_project_name}
-      touch ${EXEC_DIR}/${_project_name}/.gitkeep
+      mkdir -p ${EXEC_DIR}/${_project_name}/images
+      touch ${EXEC_DIR}/${_project_name}/images/.gitkeep
       write_color_info_line "Created images directory"
 
       # Create the machines directory for machine operations
       write_color_info_line "Creating machines directory..."
-      mkdir ${EXEC_DIR}/${_project_name}
+      mkdir -p ${EXEC_DIR}/${_project_name}/machines
       write_color_info_line "Created machines directory"
 
       # The machines begin right after the index of the project
