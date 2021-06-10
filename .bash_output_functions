@@ -8,6 +8,9 @@
 #
 # ANSI colors and formatting in Bash:
 # https://misc.flogisoft.com/bash/tip_colors_and_formatting
+#
+# Most current file version (GitHub Gist):
+# https://gist.github.com/matthewfritz/c481eb2df4f9dddcb6269915f8c9f12e
 
 # Writes a red [ERROR] line to STDOUT followed by a newline character
 # Usage: write_color_error_line "Error message"

@@ -72,8 +72,60 @@
 # Resolve where this script lives on the filesystem
 SCRIPT_DIR=$(dirname $0)
 
-# Figure out the script execution directory
+# Resolve the script execution directory
 EXEC_DIR=$(pwd)
 
-# Source the Bash output function library
+# Resolve the script name
+SCRIPT_NAME=$(basename $0)
+
+# Source my Bash output function library
 . ${SCRIPT_DIR}/.bash_output_functions
+
+# Define our exit error codes
+E_PROJECT_DIR_EXISTS=81
+E_NO_MACHINES=82
+
+# Checks the existence of the provided project directory relative to the
+# script execution directory.
+#
+# Usage: check_project_dir "myproject"
+check_project_dir()
+{
+   if [ -d "${EXEC_DIR}/$1" ]; then
+      write_color_error_exit_line $E_PROJECT_DIR_EXISTS "The project directory \"$1\" already exists."
+   fi
+}
+
+# Displays the usage of the script
+display_usage()
+{
+   echo "Usage:"
+   echo
+   echo "   ${SCRIPT_NAME} [project name] [space-separated names of machines]"
+   echo
+   echo "Usage example (project name is \"myproject\" and the two machines are \"web\" and \"db\"):"
+   echo
+   echo "   ${SCRIPT_NAME} myproject web db"
+   echo
+   echo "The usage example will create a directory called \"myproject\" with two machines called"
+   echo "\"web\" and \"db\"."
+}
+
+# Execute the script based on the number of arguments passed
+case "$#" in
+   0 )
+      # Show the script usage
+      display_usage
+      ;;
+   1 )
+      # Check to see if the project directory already exists
+      check_project_dir "$1"
+
+      # Show a message based upon a project but no machines
+      write_color_error_exit_line $E_NO_MACHINES "No machines were specified for project \"$1\"."
+      ;;
+   * )
+      # Scaffold the machines for the project
+      echo "Project name and machines"
+      ;;
+esac
