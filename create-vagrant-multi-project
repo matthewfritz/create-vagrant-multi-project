@@ -7,8 +7,7 @@
 # This allows me to generate my general project structure and management scripts from a single
 # command and in a consistent way.
 #
-# Ensure you add the directory within which this script resides to your PATH in order to use it
-# throughout your system.
+# NOTE: Ensure you add the directory within which this script resides to your PATH.
 #
 # Usage:
 #
@@ -131,7 +130,8 @@ scaffold_machine()
    local _project_name="$1"
    local _machine_name="$2"
    
-
+   # The execution directory's project directory is where we will operate
+   local _project_dir="${EXEC_DIR}/${_project_name}"
 }
 
 # Execute the script based on the number of arguments passed
@@ -168,7 +168,8 @@ case "$#" in
       mkdir -p ${EXEC_DIR}/${_project_name}/machines
       write_color_info_line "Created machines directory"
 
-      # The machines begin right after the index of the project
+      # The machines begin right after the index of the project in the
+      # arguments
       _machine_index=1
       _machines_arr=($@)
 
@@ -179,6 +180,7 @@ case "$#" in
          scaffold_machine "${_project_name}" "${_machines_arr[$i]}"
       done
 
+      write_color_info_line "Finished machine scaffolding."
       write_color_info_line "Finished"
       ;;
 esac
