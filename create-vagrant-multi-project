@@ -94,7 +94,8 @@ E_NO_MACHINES=82
 # Usage: check_project_dir "myproject"
 check_project_dir()
 {
-   if [ -d "${EXEC_DIR}/$1" ]; then
+   local _project_dir="${EXEC_DIR}/$1"
+   if [ -d "$_project_dir" ]; then
       write_color_error_exit_line $E_PROJECT_DIR_EXISTS "The project directory \"$1\" already exists."
    fi
 }
@@ -122,7 +123,7 @@ display_usage()
 # Generates the scaffolding for the machine called "web"
 scaffold_machine()
 {
-   local _machine_name=$1
+   local _machine_name="$1"
    echo "Scaffolding $_machine_name"
 }
 
@@ -145,7 +146,7 @@ case "$#" in
       
       # Create the project directory and display a message
       write_color_info_line "Creating project directory \"$1\"..."
-      #mkdir ${EXEC_DIR}/${1}
+      mkdir ${EXEC_DIR}/${1}
       write_color_info_line "Created project directory \"$1\""
 
       # The machines begin right after the index of the project
@@ -154,6 +155,7 @@ case "$#" in
 
       # Scaffold the machines for the project
       write_color_info_line "Creating machine scaffolding..."
+
       for (( i = _machine_index; i < "$#"; i++ )); do
          scaffold_machine "${_machines_arr[$i]}"
       done
