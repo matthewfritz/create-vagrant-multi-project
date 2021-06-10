@@ -122,7 +122,8 @@ display_usage()
 # Generates the scaffolding for the machine called "web"
 scaffold_machine()
 {
-   echo $_arr
+   local _machine_name=$1
+   echo "Scaffolding $_machine_name"
 }
 
 # Execute the script based on the number of arguments passed
@@ -147,14 +148,14 @@ case "$#" in
       #mkdir ${EXEC_DIR}/${1}
       write_color_info_line "Created project directory \"$1\""
 
-      # Scaffold the machines for the project
-      write_color_info_line "Creating machine scaffolding..."
-
       # The machines begin right after the index of the project
       _machine_index=1
       _machines_arr=($@)
+
+      # Scaffold the machines for the project
+      write_color_info_line "Creating machine scaffolding..."
       for (( i = _machine_index; i < "$#"; i++ )); do
-         echo "${_machines_arr[$i]}"
+         scaffold_machine "${_machines_arr[$i]}"
       done
       write_color_info_line "Finished"
       ;;
