@@ -129,9 +129,28 @@ scaffold_machine()
 {
    local _project_name="$1"
    local _machine_name="$2"
+   local _machine_dir="${_project_name}/machines/${_machine_name}"
    
    # The execution directory's project directory is where we will operate
    local _project_dir="${EXEC_DIR}/${_project_name}"
+
+   # Go into the project directory
+   pushd ${_project_dir}
+
+   # If we are provisioning the common machine, only create the common
+   # provisioning script
+   if [ "${_machine_name}" == "common"]; then
+      # Copy and edit the template
+      mkdir -p ${_machine_dir}/provision
+
+      local _common_file="${machine_dir}/provision/provision-common.sh"
+      cp ${EXEC_DIR}/templates/template-common-provision-sh ${_common_file}
+
+      # Edit the file
+
+   fi
+
+   popd
 }
 
 # Execute the script based on the number of arguments passed
@@ -181,6 +200,7 @@ case "$#" in
 
       # Scaffold the machines for the project
       write_color_info_line "Creating machine scaffolding..."
+      scaffold_machine "${_project_name}" "common"
 
       for (( i = _machine_index; i < "$#"; i++ )); do
          scaffold_machine "${_project_name}" "${_machines_arr[$i]}"

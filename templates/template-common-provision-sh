@@ -1,0 +1,5 @@
+echo "[INFO] Provisioning [:MACHINE:] machine..."
+
+# Do provisioning tasks here
+
+echo "[INFO] Done provisioning [:MACHINE:] machine."
